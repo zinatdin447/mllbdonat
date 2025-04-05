@@ -10,12 +10,24 @@ TOKEN = os.getenv("BOT_TOKEN")
 # States for ConversationHandler
 SELECT_AMOUNT, CONFIRM_ORDER = range(2)
 
-# Sample diamond prices
+# Updated diamond prices
 DIAMOND_PRICES = {
-    "86 Diamonds": "$1.00",
-    "172 Diamonds": "$2.00",
-    "257 Diamonds": "$3.00",
-    "344 Diamonds": "$4.00"
+    "50+50 Diamonds": "13 369 UZS",
+    "150+150 Diamonds": "39 849 UZS",
+    "250+250 Diamonds": "66 198 UZS",
+    "500+500 Diamonds": "134 862 UZS",
+    "11 Diamonds": "2 305 UZS",
+    "22 Diamonds": "4 481 UZS",
+    "56 Diamonds": "11 286 UZS",
+    "86 Diamonds": "17 740 UZS",
+    "112 Diamonds": "22 665 UZS",
+    "172 Diamonds": "35 172 UZS",
+    "223 Diamonds": "45 330 UZS",
+    "257 Diamonds": "50 906 UZS",
+    "336 Diamonds": "67 867 UZS",
+    "570 Diamonds": "113 198 UZS",
+    "706 Diamonds": "138 217 UZS",
+    "1163 Diamonds": "226 653 UZS"
 }
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -45,7 +57,7 @@ async def send_admin_contact(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 async def send_prices(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prices = "\n".join([f"{amount}: {price}" for amount, price in DIAMOND_PRICES.items()])
-    await update.message.reply_text(f"💎 Diamond Prices:\n{prices}")
+    await update.message.reply_text(f"\ud83d\udc8e Diamond Prices:\n{prices}")
 
 async def start_buy_flow(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[InlineKeyboardButton(amount, callback_data=amount)] for amount in DIAMOND_PRICES.keys()]
@@ -83,5 +95,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
