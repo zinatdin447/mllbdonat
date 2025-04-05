@@ -1,4 +1,4 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ConversationHandler, ContextTypes
 import os
 from dotenv import load_dotenv
@@ -31,33 +31,17 @@ DIAMOND_PRICES = {
 }
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    keyboard = [[
-        KeyboardButton("Buy Again"),
-        KeyboardButton("Admin")
-    ], [
-        KeyboardButton("Prices")
-    ]]
-    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
-    await update.message.reply_text("Welcome to the MLBB Top-up Bot! Choose an option:", reply_markup=reply_markup)
+    await update.message.reply_text("Welcome to the MLBB Top-up Bot! Type /start to begin your order.")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text
-
-    if text == "Buy Again":
-        return await start_buy_flow(update, context)
-    elif text == "Admin":
-        return await send_admin_contact(update, context)
-    elif text == "Prices":
-        return await send_prices(update, context)
-    else:
-        await update.message.reply_text("Please choose an option from the keyboard.")
+    await update.message.reply_text("Please type /start to begin your top-up.")
 
 async def send_admin_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Contact admin: @youradminusername")
 
 async def send_prices(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prices = "\n".join([f"{amount}: {price}" for amount, price in DIAMOND_PRICES.items()])
-    await update.message.reply_text(f"\ud83d\udc8e Diamond Prices:\n{prices}")
+    await update.message.reply_text(f"💎 Diamond Prices:\n{prices}")
 
 async def start_buy_flow(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[InlineKeyboardButton(amount, callback_data=amount)] for amount in DIAMOND_PRICES.keys()]
@@ -95,6 +79,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 
